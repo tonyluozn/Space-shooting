@@ -11,7 +11,7 @@ struct Enemy
     /// CONSTRUCTOR
     ///
 
-    Enemy(Geometry const&);
+    Enemy(Geometry const&, ge211::Position const&);
 
     ///
     /// MEMBER FUNCTIONS
@@ -21,14 +21,8 @@ struct Enemy
 
 
     bool hits_bottom(Geometry const&) const;
-    bool hits_side(Geometry const&) const;
 
-
-    bool Enemy::hits_missile(Missile const&) const;
-
-    bool Enemy::hits_ship(Block const&) const;
-
-    bool destroy_enemy(std::vector<Enemy>& enemies) const;
+    bool hits_ship(Block const&) const;
 
     ///
     /// MEMBER VARIABLES

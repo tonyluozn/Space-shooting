@@ -5,9 +5,6 @@
 //
 // Model constants:
 //
-const int missile_radius;
-const ge211::Dimensions ship_dims;
-const ge211::Dimensions enemy_dims;
 const ge211::Color enemy_missile_color;
 const ge211::Color ship_missile_color;
 // the y-coordinate at which enemy will emit five missiles

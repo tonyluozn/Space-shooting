@@ -14,10 +14,10 @@ Missile::Missile(Geometry const& geometry, bool enemy, Block const& block)
     // if the missile is from ship, the missile's initial position will be above the ship, going upward
     if(enemy){
         center_ = block.bottom_left().right_by(block.width/2).down_by(1 + geometry.missile_radius);
-        velocity_ = geometry.missile_velocity;
+        velocity_ = geometry.missile_velocity0;
     }else{
         center_ = block.top_left().right_by(block.width/2).up_by(1 + geometry.missile_radius);
-        velocity_ = geometry.missile_velocity * (-1);
+        velocity_ = geometry.missile_velocity0 * (-1);
     }
 
 }
@@ -49,12 +49,7 @@ Missile Missile::next() const
 
 bool Missile::hits_missile(Missile const& missile) const
 {
-    // is there an easier way?
-    bool a = (missile.top_right().x < center_.x - radius_
-              || center_.x + radius_ < missile.top_left().x);
-    bool b = (missile.bottom_left().y < center_.y - radius_
-              || center_.y + radius_ < missile.top_left().y);
-    return !(a||b);
+
 }
 
 bool Missile::hits_ship(Block const& ship) const

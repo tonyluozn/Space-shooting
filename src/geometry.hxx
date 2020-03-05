@@ -21,7 +21,7 @@ struct Geometry
     int missile_radius;
 
     // The missile's  velocity {width, height}:
-    ge211::Dimensions missile_velocity;
+    ge211::Dimensions missile_velocity0;
 
     // The enemy's  velocity {width, height}:
     ge211::Dimensions enemy_velocity;

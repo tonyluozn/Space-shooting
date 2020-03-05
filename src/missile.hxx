@@ -11,7 +11,7 @@ struct Missile
     /// CONSTRUCTOR
     ///
 
-    Missile(Geometry const&);
+    Missile(Geometry const& , bool , Block const& );
 
     ///
     /// MEMBER FUNCTIONS
@@ -31,9 +31,9 @@ struct Missile
     // Intersection between a circle and a rectangle is tricky, so we
     // will approximate it with the intersection of two rectangles.
 
-    bool Missile::hits_missile(Missile const&) const;
+    bool hits_missile(Missile const&) const;
 
-    bool Missile::hits_ship(Block const&) const;
+    bool hits_ship(Block const&) const;
 
     bool destroy_missile(std::vector<Missile>& missiles) const;
 

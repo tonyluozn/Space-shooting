@@ -4,10 +4,14 @@ include(.cs211/cmake/CMakeLists.txt)
 
 set(MODEL_SRC
         # LIST ADDITIONAL MODEL .cxx FILES HERE:
-        src/model.cxx)
+        src/model.cxx
+        src/geometry.cxx
+        src/enemy.cxx
+        src/missile.cxx)
 
 add_program(main
     src/main.cxx
+
     # LIST ADDITIONAL NON-MODEL (UI) .cxx FILES HERE:
     ${MODEL_SRC})
 target_link_libraries(main ge211)
