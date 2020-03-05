@@ -1,48 +1,21 @@
 #pragma once
 
 #include <ge211.hxx>
+#include <vector>
+#include "enemy.hxx"
+#include "missile.hxx"
 
 //
 // Model constants:
 //
-const ge211::Color enemy_missile_color;
-const ge211::Color ship_missile_color;
+
 // the y-coordinate at which enemy will emit five missiles
-const int enemy_launch_missile_y;
+const int enemy_launch_missile_y = 0;
 
 //
 // Model Classes:
 //
-// the position of the spaceship and whether it is alive. (if it is alive, then
-// it can be moved by the mouse.
-struct Ship
-{
-    ge211::Position top_left;
-    bool live;
-};
 
-// The position of enemy, its speed,
-// and whether it's still there.
-struct Enemy
-{
-    //The top-left corner
-    ge211::Position top_left;
-    ge211::Dimensions speed;
-    bool live;
-
-};
-
-// The position of missile, its speed,
-// and whether it's still there.
-struct Missile
-{
-    //The top-left corner
-    ge211::Position center;
-    ge211::Dimensions speed;
-    bool live;
-    //true when missile is emitted by enemy; false when missile is emitted by the spaceship
-    bool is_enemy;
-};
 
 // The whole state of the game
 //
@@ -51,7 +24,9 @@ class Model
     //
     // Private data members
     //
+    explicit Model(Geometry const& geometry = Geometry());
 
+    Geometry const     geometry_;
     //The Enemies
     std::vector<Enemy> enemies_;
 
@@ -59,7 +34,10 @@ class Model
     std::vector<Missile> missiles_;
 
     //The spaceship
-    Ship ship_;
+    ge211::Rectangle ship_;
+
+    // live
+    bool ship_live;
 
     // time travelled
     int seconds_travelled;
@@ -70,7 +48,7 @@ public:
     //
 
     //Return the Ship object
-    Ship get_ship () const ;
+    ge211::Rectangle get_ship () const ;
 
     //Return all missiles's state
     std::vector < Missile > const & get_missiles () const ;

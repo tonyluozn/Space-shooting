@@ -19,7 +19,6 @@ struct Enemy
 
     Enemy next() const;
 
-
     bool hits_bottom(Geometry const&) const;
 
     bool hits_ship(Block const&) const;
