@@ -35,8 +35,6 @@ struct Missile
 
     bool hits_ship(Block const&) const;
 
-    bool destroy_missile(std::vector<Missile>& missiles) const;
-
     // reflect the given missile's horizontal velocity (same colors)
     void missile_bounce_(Missile &);
 
@@ -50,10 +48,7 @@ struct Missile
     ge211::Dimensions velocity_;
 
     // The position of the center of the missile.
-    ge211::Position   center_;
-
-    // Whether the missile exists
-    bool              live_;
+    ge211::Position center_ = {0,0};
 
     // whether the missile is by enemy or missile
     bool is_enemy;

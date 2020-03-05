@@ -76,10 +76,7 @@ private:
     bool ship_hit_() const;
 
     // Returns a pointer to a hit enemy, or nullptr if none.
-    Enemy* find_hit_Enemy_ () const ;
-
-    // Removes the indicated enemy.
-    void destroy_hit_Enemy_ ( Enemy &);
+    void find_destroy_hit_Enemy_ () ;
 
     // Removes the hit missiles. (different colors)
     void find_destroy_hit_Missile_ ();

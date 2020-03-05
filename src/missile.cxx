@@ -7,7 +7,6 @@
 //block can be either ship or enemy, and the initial position of the missile will depend on that
 Missile::Missile(Geometry const& geometry, bool enemy, Block const& block)
         : radius_   (geometry.missile_radius)
-        , live_     (true)
         , is_enemy  (enemy)
 {
     // if the missile is from enemy, the missile's initial position will be below the enemy, going downward
@@ -65,17 +64,7 @@ void missile_bounce_(Missile & missile){
     missile.velocity_.width *= -1;
 }
 
-bool Missile::destroy_missile(std::vector<Missile>& missiles) const
-{
-    for(int i=0; i< missiles.size(); i++){
-        if (hits_missile(missiles[i])) {
-            std::swap(missiles[i], missiles.back());
-            missiles.pop_back();
-            return true;
-        }
-    }
-    return false;
-}
+
 
 bool operator==(Missile const& b1, Missile const& b2)
 {

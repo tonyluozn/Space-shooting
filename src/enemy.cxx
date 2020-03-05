@@ -2,6 +2,7 @@
 
 #include "enemy.hxx"
 #include "geometry.hxx"
+#include "missile.hxx"
 
 
 // the enemy's initial position will depend on pos, which will be determined by the model
@@ -30,6 +31,7 @@ bool Enemy::hits_ship(Block const& ship) const
 {
 
 }
+
 
 bool operator==(Enemy const& b1, Enemy const& b2)
 {
