@@ -4,108 +4,45 @@
 #include "model.hxx"
 #include <ge211.hxx>
 
-///
-/// VIEW CONSTANTS
-///
-
-extern ge211::Color const ship_color, missile_color, enemy_color;
-
-///
-/// MAIN UI STRUCT
-///
+extern ge211::Color const ship_color, missile_color, enemy_color,
+ship_missile_color;
 
 struct Ui : ge211::Abstract_game
 {
-    ///
-    /// CONSTRUCTOR
-    ///
 
-    // Constructs a `Ui` given a reference to the model that stores
-    // the actual state of the game.
-    //
-    // The word `explicit` means that this constructor doesn't define an
-    // implicit conversion whereby you could pass a `Model` to a function
-    // that expects a `Ui` and have it work.
     explicit Ui(Model&);
 
-    ///
-    /// MEMBER FUNCTIONS (for the view)
-    ///
-
-    // Returns the size of the window as given by `geometry_.scene_dims`.
-    //
-    // (GE211 calls this to find out how big to make the window.)
     ge211::Dimensions initial_window_dimensions() const override;
 
-    // Renders all the game entities to the screen. In particular,
-    // ball_sprite_ is placed at the ball's bounding box's top-left,
-    // paddle_sprite_ is placed where the model says the paddle is,
-    // and brick_sprite_ is placed for each brick in model_.bricks.
     void draw(ge211::Sprite_set&) override;
 
-    ///
-    /// MEMBER FUNCTIONS (for the controller)
-    ///
-
-    // Defines how the game responds to key events. There are two keys
-    // recognized:
-    //
-    //  - On 'q', quits.
-    //
-    //  - On ' ', tells the model to launch the ball.
     void on_key(ge211::Key) override;
 
-    // Defines how the game responds to mouse clicks (which is by telling
-    // the model to launch the ball).
-    void on_mouse_up(ge211::Mouse_button, ge211::Position) override;
 
-    // Defines how the game responds to mouse motion (which is by telling
-    // the model to change the x coordinate of the paddle).
     void on_mouse_move(ge211::Position) override;
 
-    // Updates the model to reflect the passage of time, by calling
-    // `Model::update`.
-    //
-    // While this function is passed `dt`, the elapsed time in seconds since the
-    // previous frame, we aren't using that for now.
-    //
-    // Instead, the main job of `on_frame` is to pick a random `int` to
-    // pass to `Model::update(int)`, which uses that `int` to "boost"
-    // the velocity of the ball if it should happen to hit the paddle
-    // during this frame. The `int` passed to `Model::update(int)` should
-    // be chosen randomly from the closed interval
-    //
-    //     [ -model_.geometry_.max_boost, model_.geometry_.max_boost ].
-    //
     void on_frame(double dt) override;
 
-    ///
-    /// MEMBER VARIABLE (model reference)
-    ///
 
-    // This is a reference to the model. It means that the UI doesn't
-    // own the model but has access to it. Thus, the client of the UI
-    // (brick_out.cpp) must create a `Model` first and then pass that by
-    // reference to the `Ui` constructor.
     Model& model_;
 
-    ///
-    /// MEMBER VARIABLES (for the view)
-    ///
 
-    // These three definitions create the sprites that we need to
-    // display the circle, the paddle, and the bricks to the screen.
-    // Each depends on the geometry, which it can access via the `model_`
-    // member variable. Member variables are initialized in order, which
-    // means that `model_` will be properly initialized before we use it
-    // here.
+    ge211::Rectangle_sprite    const
+            ship_sprite_    {model_.get_geometry().ship_dims, ship_color};
 
-    ge211::Circle_sprite    const
-            ship_sprite_    {model_.geometry_.ball_radius,  ball_color};
 
     ge211::Rectangle_sprite const
-            enemy_sprite_  {model_.geometry_.paddle_dims_, paddle_color};
+            enemy_sprite_  {model_.get_geometry().enemy_dims, enemy_color};
 
-    ge211::Rectangle_sprite const
-            missile_sprite_   {model_.geometry_.brick_dims(), brick_color};
+
+    ge211::Circle_sprite const
+            missile_sprite_   {model_.get_geometry().missile_radius,
+                               missile_color};
+
+    ge211::Text_sprite time_sprite_
+            {"0", ge211::Font("sans.ttf", 24)};
+
+    ge211::Circle_sprite const
+            ship_missile_sprite_
+            {model_.get_geometry().missile_radius, ship_missile_color };
 };

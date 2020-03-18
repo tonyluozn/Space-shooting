@@ -20,6 +20,8 @@ struct Geometry
     // The radius of the missile:
     int missile_radius;
 
+    int missile_launch_y;
+
     // The missile's  velocity {width, height}:
     ge211::Dimensions missile_velocity0;
 

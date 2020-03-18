@@ -4,7 +4,6 @@
 
 int main()
 {
-    // TODO
     Model model;
     Ui ui(model);
     ui.run();

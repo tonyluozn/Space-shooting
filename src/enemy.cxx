@@ -2,21 +2,40 @@
 
 #include "enemy.hxx"
 #include "geometry.hxx"
-#include "missile.hxx"
 
 
-// the enemy's initial position will depend on pos, which will be determined by the model
+
+// the enemy's initial position will depend on pos,
+// which will be determined by the model
 Enemy::Enemy(Geometry const& geometry, ge211::Position const& pos)
-        : dimensions_  (geometry.ship_dims)
+        : dimensions_  (geometry.enemy_dims)
         , velocity_ (geometry.enemy_velocity)
         , top_left_   (pos)
         , live_     (true)
 { }
 
+
 bool Enemy::hits_bottom(Geometry const& geometry) const
 {
-    return (top_left_.down_by(geometry.enemy_dims.height).y > geometry.scene_dims.height);
+    return (top_left_.down_by(dimensions_.height).y >
+    geometry.scene_dims.height);
 }
+
+bool Enemy::hits_ship(Block const& ship) const
+{
+    int ship_x = ship.top_left().right_by(ship.dimensions().width/2).
+            down_by(ship.dimensions().height/2).x;
+    int ship_y = ship.top_left().right_by(ship.dimensions().width/2).
+            down_by(ship.dimensions().height/2).y;
+    int e_x = top_left_.down_by(dimensions_.height/2).
+            right_by(dimensions_.width/2).x;
+    int e_y = top_left_.down_by(dimensions_.height/2).
+            right_by(dimensions_.width/2).y;
+    int dist = (ship_x - e_x)*(ship_x - e_x) + (ship_y - e_y)*(ship_y - e_y);
+    return dist < (ship.dimensions().width+dimensions_.width)*
+    (ship.dimensions().width+dimensions_.width);
+}
+
 
 
 Enemy Enemy::next() const
@@ -26,12 +45,6 @@ Enemy Enemy::next() const
     result.top_left_.y += velocity_.height;
     return result;
 }
-
-bool Enemy::hits_ship(Block const& ship) const
-{
-
-}
-
 
 bool operator==(Enemy const& b1, Enemy const& b2)
 {

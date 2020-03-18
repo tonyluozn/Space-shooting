@@ -16,7 +16,6 @@ const int enemy_launch_missile_y = 0;
 // Model Classes:
 //
 
-
 // The whole state of the game
 //
 class Model
@@ -24,12 +23,12 @@ class Model
     //
     // Private data members
     //
-    explicit Model(Geometry const& geometry = Geometry());
 
     Geometry const     geometry_;
     //The Enemies
     std::vector<Enemy> enemies_;
 
+    std::string const   time_string_;
     //The missiles
     std::vector<Missile> missiles_;
 
@@ -41,12 +40,12 @@ class Model
 
     // time travelled
     int seconds_travelled;
-
+    ge211::Timer timer_;
 public:
     //
     //Public functions
     //
-
+    Model(Geometry const& geometry = Geometry());
     //Return the Ship object
     ge211::Rectangle get_ship () const ;
 
@@ -56,40 +55,30 @@ public:
     //Return all enemies' state
     std::vector < Enemy > const & get_enemies () const ;
 
-    // Updates the model state for one time step
-    void update();
+    bool get_live() const;
 
+    Geometry get_geometry() const ;
+
+    // Updates the model state for one time step
+    void update(int& s);
+
+    void enemy_fire(Enemy& enemy);
     // move the x-coordinate of the spaceship to x
     void move_ship(int x);
+
+    void ship_launch_missile();
+
+    void generate_enemy();
+    bool check_enemy(Enemy&);
 
     // set the live of the ship to true
     void launch_ship();
 
 
+    // return time that has passed since the game started.
+    int get_time_() const ;
 
 private:
-    //
-    // Helper functions
-    //
-
-    // Determines whether the ship collides with the missile
-    bool ship_hit_() const;
-
-    // Returns a pointer to a hit enemy, or nullptr if none.
-    void find_destroy_hit_Enemy_ () ;
-
-    // Removes the hit missiles. (different colors)
-    void find_destroy_hit_Missile_ ();
-
-    //return true when the given enemy need to launch five missiles (when they reach a certain y-coordinate on the screen)
-    bool enemy_launch_missile(Enemy &);
-
-    // Returns the ship to the starting position
-    void reset_ship_();
-
-    // return time that has passed since the game started.
-    int get_time_();
-
 
     // Test access3
     friend struct Test_access ;

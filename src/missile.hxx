@@ -3,6 +3,7 @@
 
 #include "geometry.hxx"
 #include <ge211.hxx>
+#include "enemy.hxx"
 using Block = ge211::Rectangle;
 
 struct Missile
@@ -11,7 +12,7 @@ struct Missile
     /// CONSTRUCTOR
     ///
 
-    Missile(Geometry const& , bool , Block const& );
+    Missile(Geometry const& , bool , ge211::Position const& );
 
     ///
     /// MEMBER FUNCTIONS
@@ -21,22 +22,19 @@ struct Missile
 
     Missile next() const;
 
-
+    bool hits_top(Geometry const&) const;
     bool hits_bottom(Geometry const&) const;
     bool hits_side(Geometry const&) const;
 
-    // Collision detection for blocks. Returns whether the circle's
-    // bounding box intersects with the given block.
-    //
-    // Intersection between a circle and a rectangle is tricky, so we
-    // will approximate it with the intersection of two rectangles.
 
-    bool hits_missile(Missile const&) const;
+    int hits_missile(std::vector<Missile>&, const int&);
+
+    bool hits_enemy(std::vector<Enemy>&);
 
     bool hits_ship(Block const&) const;
 
     // reflect the given missile's horizontal velocity (same colors)
-    void missile_bounce_(Missile &);
+    void missile_bounce_();
 
     ///
     /// MEMBER VARIABLES
@@ -52,6 +50,8 @@ struct Missile
 
     // whether the missile is by enemy or missile
     bool is_enemy;
+
+    bool live_;
 };
 
 bool operator==(Missile const&, Missile const&);

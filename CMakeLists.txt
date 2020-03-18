@@ -7,7 +7,8 @@ set(MODEL_SRC
         src/model.cxx
         src/geometry.cxx
         src/enemy.cxx
-        src/missile.cxx)
+        src/missile.cxx
+        src/ui.cxx)
 
 add_program(main
     src/main.cxx
